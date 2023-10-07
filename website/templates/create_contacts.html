@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=yes">
+		<link rel="stylesheet" type="text/css" href="../static/styles/style_create_contacts.css" />
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+			integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+			crossorigin="anonymous"
+		/>
+		{% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+				{% for category, message in messages %}
+					<div class="alert alert-{{category}} alert-dismissible fade show alert-message" role="alert">
+						<span>{{ message }}</span>
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				{% endfor %}
+			{% endif %}
+		{% endwith %}
+		<script>
+			setTimeout(function() {
+				document.querySelectorAll('.alert').forEach(function(alert) {
+					alert.style.display = 'none';
+				});
+			}, 8000); // hide alerts after 8 seconds
+		</script>
+		<title>{% block title %}Create Contacts{% endblock %}</title>
+	</head>
+	<body>
+		<div>
+			<div>
+				<div id="background" class="home-container">
+					<div id="overlay"></div>
+					<div id="spinner-loader" class="spinner"></div>
+					<h1 class="home-text">יצירת אנשי קשר</h1>
+					<p id="brief-paragraph" class="home-text01">
+						<span>הורידו את התבנית אקסל המוכנה.</span>
+						<br />
+						<span> מלאו את העמודות - שם מלא, טלפון וקורס נוכחי</span>
+						<br />
+						<span> התוכנה תדאג להוסיף אותם לאנשי הקשר של הטלפון המדורי עם תגית של הקורס הנוכחי ולמחוק את אנשי הקשר הקיימים עם אותו מספר טלפון. </span>
+						<br />
+						<span>כמו כן אפשר להקליד מילות מפתח לאנשי הקשר שיתווספו בסוף השם של האיש קשר, דבר זה יאפשר חיפוש מהיר יותר בווצאפ.</span>
+						<br />
+						<span>לאחר מכן:</span>
+						<br />
+						<span>- צרו קבוצה בווצאפ</span>
+						<br />
+						<span>- תנסו להוסיף אנשי קשר</span>
+						<br />
+						<span>- בחיפוש תרשמו את שם הקורס הנוכחי</span>
+						<br />
+						<span>- תוסיפו את כל מי ששייך לאותו הקורס בזריזות!</span>
+						<br />
+					</p>
+					<img id="bsmch-img" alt="image" src="../static/images/bsmch-logo.png" class="home-image" />
+					<button id="selectButton" name="select_button" type="button" class="selection-button button"> בחרו קובץ </button>
+					<a href="{{ url_for('navigation.download_template_xlsx') }}" id="downloadButton" class="download-button">תבנית <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+						<path d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293V6.5z"/>
+						<path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z"/>
+					  </svg>
+					</a>
+					<button id="startButton" type="button" class="submit-button button"> יאללה </button>
+					<input type="text" id="inputBox" placeholder="הקובץ שנבחר..." name="input_box" autofocus required disabled class="home-inputBox input-text" />
+					<form method="POST" action="{{ url_for('navigation.create_contacts') }}" enctype="multipart/form-data" id="uploadForm">
+						<input type="text" id="textBox" placeholder="מילות מפתח לאנשי הקשר..." name="text_box" minlength="2" maxlength="12" class="home-textboxinput input-text" />
+						<input type="file" id="fileInput" name="contacts_file" accept=".xlsx" style="display: none;">
+					</form>
+				</div>
+			</div>
+			<script>
+				const selectButton = document.querySelector('#selectButton');
+				const startButton = document.querySelector('#startButton');
+				const fileInput = document.querySelector('#fileInput');
+				// const textBox = document.querySelector('#textBox');
+				const inputBox = document.querySelector('#inputBox');
+				const uploadForm = document.querySelector('#uploadForm');
+				selectButton.addEventListener('click', () => {
+					fileInput.click();
+				});
+				fileInput.addEventListener('change', () => {
+					const fileName = fileInput.value.split('\\').pop();
+					inputBox.value = fileName;
+				});
+				startButton.addEventListener('click', () => {
+					uploadForm.submit();
+					uploadForm.reset();
+				});
+				// Add click event listener to the button
+				document.getElementById('startButton').addEventListener('click', function() {
+					
+					setTimeout(function() {
+					// Show the overlay
+						document.getElementById('overlay').style.display = 'block';
+						document.getElementById('spinner-loader').style.display = 'grid';
+					}, 20);
+				});
+			</script>
+			<script
+				src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+				integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+				crossorigin="anonymous"
+		  	></script>
+		  	<script
+				src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+				integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+				crossorigin="anonymous"
+		  	></script>
+		  	<script
+				src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+				integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+				crossorigin="anonymous"
+		  	></script>
+		</div>
+	</body>
+</html>

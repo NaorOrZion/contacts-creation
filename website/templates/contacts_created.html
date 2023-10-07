@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=yes">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+        <meta http-equiv="Pragma" content="no-cache">
+        <meta http-equiv="Expires" content="0">
+        <link rel="stylesheet" type= "text/css" href="../static/styles/style_contacts_created.css" />
+        <link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+			integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+			crossorigin="anonymous"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+			crossorigin="anonymous"
+		/>
+        <title>{% block title %}Contacts Created{% endblock %}</title>
+    </head>
+    <body>
+        <div>
+            <div id="background" class="contacts-created-container">
+                <img id="bsmch-img" alt="image" src="../static/images/bsmch-logo.png" class="contacts-created-home-image" />
+                <h1 class="contacts-created-text">אנשי הקשר נוספו בהצלחה!</h1>
+                <div id="chart" class="contacts-created-chart">
+                    <table class='wp-table'>
+                        <tr class="chart-headers">
+                            <th>שם מלא</th>
+                            <th>מספר טלפון</th>
+                            <th>קורס נוכחי</th>
+                        </tr>
+                        {% for i in range(names|length) %}
+                        <tr class="chart-rows">
+                            <td>{{ names[i] }}</td>
+                            <td>{{ phone_numbers[i] }}</td>
+                            <td>{{ current_courses[i] }}</td>                           
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+                <a class="contacts-created-home-button contacts-created-link" href="/" dir="rtl">דף הבית</a>
+            </div>
+            <script>
+                if (window.history && window.history.pushState) {
+                        history.pushState(null, null, window.location.href);
+                        window.onpopstate = function(event) {
+                            history.go(1);
+                    };
+                }
+            </script>
+            <script
+				src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+				integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+				crossorigin="anonymous"
+		  	></script>
+		  	<script
+				src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+				integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+				crossorigin="anonymous"
+		  	></script>
+		  	<script
+				src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+				integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+				crossorigin="anonymous"
+		  	></script>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,191 @@
+/* Rubik-regular - latin */
+@font-face {
+  font-family: 'Rubik';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/Rubik-Regular.ttf'); /* IE9 Compat Modes */
+}
+
+body {
+  margin: 0px;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.contacts-created-container {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #CAEEF6;
+  background-image: linear-gradient(#ffffffe5, #CAEEF6);
+  background-size: cover;
+}
+
+.contacts-created-home-image {
+  top: 5%;
+  left: 4%;
+  width: 11%;
+  height: 11%;
+  width: var(--dl-size-size-medium);
+  position: absolute;
+  object-fit: cover;
+}
+
+.contacts-created-text {
+  top: 15%;
+  right: 10%;
+  direction: rtl;
+  position: absolute;
+  font-size: 4.5em;
+  font-family: Rubik;
+  font-weight: bold;
+}
+
+.contacts-created-chart {
+  top: 30%;
+  right: 10%;
+  height: 40%;
+  width: 55%;
+  overflow-y: auto;
+  color: rgb(18, 18, 18);
+  position: absolute;
+  direction: rtl;
+  font-size: 20px;
+  align-self: center;
+  box-shadow: rgb(212, 212, 212) 5px 5px 10px 0px;
+  text-align: center;
+  font-family: Rubik;
+  line-height: 1.5;
+  border-color: #005366;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.93);
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+  display: flex; /* Add flex display property */
+  flex-direction: column; /* Set flex-direction to column */
+}
+
+.contacts-created-home-button {
+  position: absolute;
+  top: 78%;
+  right: 10%;
+  width: 7.5%;
+  height: 5%;
+  direction: rtl;
+  appearance: none;
+  background-color: #006880;
+  border: 0.125em solid #006880;
+  border-radius: 1rem !important;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Rubik !important;
+  font-size: 18px !important;
+  margin: 0;
+  min-height: 3em;
+  min-width: 0;
+  outline: none;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  will-change: transform;
+  line-height: 47px;
+}
+  
+.contacts-created-home-button:disabled {
+  pointer-events: none;
+}
+  
+.contacts-created-home-button:hover {
+  color: #006880;
+  background-color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+  
+.contacts-created-home-button:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+.wp-table{
+  display: grid;
+  overflow-y: auto;
+}
+
+table {
+  border-collapse: collapse;
+  font-family: Rubik;
+  table-layout: auto;
+  display: block;
+}
+
+table td {
+  padding: 15px;
+}
+
+table thead td {
+  background-color: #54585d;
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+  border: 1px solid #54585d;
+}
+
+table tbody td {
+  color: #636363;
+  border: 1px solid #dddfe1;
+}
+
+table tbody tr {
+  background-color: #f9fafb;
+}
+
+table tbody tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+table,
+th,
+td {
+  text-align: center;
+  width: 100%;
+}
+
+/* Hide the default scrollbar */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+}
+
+/* Style the handle (thumb) of the scrollbar */
+::-webkit-scrollbar-thumb {
+  background-color: #006880; /* Color of the handle (thumb) */
+  border-radius: 5px; /* Border radius of the handle (thumb) */
+  width: 1px !important;
+}
+
+/* Create a pseudo-element for the rounded border */
+::-webkit-scrollbar-track::before {
+  content: ""; /* Empty content to generate the pseudo-element */
+  position: absolute; /* Set position to absolute for positioning */
+  top: -5px; /* Adjust top positioning as needed */
+  right: -5px; /* Adjust right positioning as needed */
+  bottom: -5px; /* Adjust bottom positioning as needed */
+  left: -5px; /* Adjust left positioning as needed */
+  border-radius: 50px; /* Border radius for rounded border */
+  background-color: #f1f1f1; /* Background color of the rounded border */
+}
