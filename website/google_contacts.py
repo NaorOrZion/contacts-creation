@@ -12,12 +12,13 @@ Brief: The code adds contacts to google contacts.
 
 
 import re
+import os
 import requests
 import openpyxl
 from flask import flash
 from pathlib import Path
 from zipfile import BadZipfile
-from typing import Tuple, List
+from typing import Tuple, List, Union
 from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -50,7 +51,7 @@ HTTP_OK_STATUS = 200
 CONTACTS_CHUNK_LIMIT = 200
 
 
-def get_credentials() -> Credentials:
+def get_credentials() -> Union[Credentials, str, bool]:
     """
     This function gets the user's credentials from google with the help of the OAuth 2.0 Scope.
     OAuth 2.0 holds an access token. Remember - The access token replaces the API key.
@@ -62,6 +63,10 @@ def get_credentials() -> Credentials:
     :return credentials
     """
     creds = None
+
+    if not os.path.isfile(CLIENT_FILE):
+        flash(f"קובץ ה-client_secret.json לא נמצא!", "danger")
+        return False
     
     # Checks if the creds file is exists in the same directory.
     if TOKEN_FILE.exists():
@@ -81,7 +86,11 @@ def get_credentials() -> Credentials:
 
     # Use a Client File in the OAuth flow to acquire an access token
     # associated with your project on behalf of a user's account.
-    flow = InstalledAppFlow.from_client_secrets_file(client_secrets_file=str(CLIENT_FILE), scopes=OAUTH_SCOPE)
+    try:
+        flow = InstalledAppFlow.from_client_secrets_file(client_secrets_file=str(CLIENT_FILE), scopes=OAUTH_SCOPE)
+    except OSError as e:
+        flash(f"קובץ ה-client_secret.json לא נמצא!", "danger")
+        return False
       
     try: 
         creds = flow.run_local_server(port=LOCAL_PORT_NUMBER)
@@ -155,6 +164,10 @@ def add_contacts_from_excel(file_path: Path, key_words: str) -> Tuple[List[str],
     # Check if there is a proxy error, if so, notify the client.
     if credentials == "Proxy Error":
         flash(f"צריך לשנות את הפרוקסי לכתובת: {PROXY_IP}", "danger")
+        is_error = True
+        return names, phone_numbers, current_courses, is_error
+    #Check if there is any error, if so, notify the client.
+    elif credentials is False:
         is_error = True
         return names, phone_numbers, current_courses, is_error
 
